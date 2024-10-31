@@ -1,0 +1,55 @@
+{
+  "scopeName": "text.html.js.template",
+  "patterns": [
+    {
+      "begin": "`",
+      "end": "`",
+      "contentName": "source.html.embedded",
+      "patterns": [
+        {
+          "include": "#html-content"
+        }
+      ]
+    }
+  ],
+  "repository": {
+    "html-content": {
+      "patterns": [
+        {
+          "begin": "<([a-zA-Z0-9]+)(.*?)>",
+          "beginCaptures": {
+            "1": {
+              "name": "entity.name.tag.html"
+            },
+            "2": {
+              "name": "entity.other.attribute-name.html"
+            }
+          },
+          "end": "</([a-zA-Z0-9]+)>",
+          "endCaptures": {
+            "1": {
+              "name": "entity.name.tag.html"
+            }
+          },
+          "patterns": [
+            {
+              "match": "(class)=\"([^\"]*)\"",
+              "captures": {
+                "1": {
+                  "name": "entity.other.attribute-name.class.html"
+                },
+                "2": {
+                  "name": "string.quoted.double.html"
+                }
+              }
+            },
+            {
+              "match": "\\$\\{([a-zA-Z0-9_]+)\\}",
+              "name": "variable.other.readwrite.js"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
