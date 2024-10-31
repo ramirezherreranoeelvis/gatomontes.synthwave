@@ -8,7 +8,7 @@
 	"icon": "icon.png",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/ramirezherreranoeelvis/synthwave-vscode-dark-blue"
+		"url": "https://github.com/ramirezherreranoeelvis/gatomontes.synthwave"
 	},
 	"engines": {
 		"vscode": "^1.33.0"
