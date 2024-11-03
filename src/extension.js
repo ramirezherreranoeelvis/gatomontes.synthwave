@@ -2,14 +2,11 @@ const path = require('path');
 const fs = require('fs');
 const vscode = require('vscode');
 
-/**
- * @param {vscode.ExtensionContext} context
- */
 function activate(context) {
-	this.extensionName = 'RobbOwen.synthwave-vscode';
+	this.extensionName = 'GatomontesRoseIII.synthwave-dark-blue';
 	this.cntx = context;
 
-	const config = vscode.workspace.getConfiguration("synthwave84");
+	const config = vscode.workspace.getConfiguration("synthwave84DarkBlue");
 
 	let disableGlow = config && config.disableGlow ? !!config.disableGlow : false;
 
@@ -20,15 +17,15 @@ function activate(context) {
 	const parsedBrightness = Math.floor(brightness * 255).toString(16).toUpperCase();
 	let neonBrightness = parsedBrightness;
 
-	let disposable = vscode.commands.registerCommand('synthwave84.enableNeon', function () {
+	let disposable = vscode.commands.registerCommand('synthwave84DarkBlue.enableNeon', function () {
 
 		const appDir = path.dirname(vscode.env.appRoot);
 		const base = path.join(appDir, 'app', 'out', 'vs', 'code');
 		const electronBase = isVSCodeBelowVersion("1.70.0") ? "electron-browser" : "electron-sandbox";
-		const workBenchFilename = isVSCodeBelowVersion("1.94.0") ? "workbench.html" : "workbench.esm.html";
+		const workBenchFilename = vscode.version == "1.94.0" ? "workbench.esm.html" : "workbench.html";
 
 		const htmlFile = path.join(base, electronBase, "workbench", workBenchFilename);
-		const templateFile = path.join(base, electronBase, "workbench", "neondreams.js");
+		const templateFile = path.join(base, electronBase, "workbench", "neondreamsDarkBlue.js");
 
 		try {
 
@@ -46,13 +43,13 @@ function activate(context) {
 			const html = fs.readFileSync(htmlFile, "utf-8");
 
 			// check if the tag is already there
-			const isEnabled = html.includes("neondreams.js");
+			const isEnabled = html.includes("neondreamsDarkBlue.js");
 
 			if (!isEnabled) {
 				// delete synthwave script tag if there
-				let output = html.replace(/^.*(<!-- SYNTHWAVE 84 --><script src="neondreams.js"><\/script><!-- NEON DREAMS -->).*\n?/mg, '');
+				let output = html.replace(/^.*(<!-- SYNTHWAVE 84 DARK BLUE --><script src="neondreamsDarkBlue.js"><\/script><!-- NEON DREAMS DARK BLUE -->).*\n?/mg, '');
 				// add script tag
-				output = html.replace(/\<\/html\>/g, `	<!-- SYNTHWAVE 84 --><script src="neondreams.js"></script><!-- NEON DREAMS -->\n`);
+				output = html.replace(/\<\/html\>/g, `	<!-- SYNTHWAVE 84 DARK BLUE --><script src="neondreamsDarkBlue.js"></script><!-- NEON DREAMS DARK BLUE -->\n`);
 				output += '</html>';
 
 				fs.writeFileSync(htmlFile, output, "utf-8");
@@ -81,7 +78,7 @@ function activate(context) {
 		}
 	});
 
-	let disable = vscode.commands.registerCommand('synthwave84.disableNeon', uninstall);
+	let disable = vscode.commands.registerCommand('synthwave84DarkBlue.disableNeon', uninstall);
 
 	context.subscriptions.push(disposable);
 	context.subscriptions.push(disable);
@@ -95,7 +92,7 @@ function uninstall() {
 	const appDir = path.dirname(vscode.env.appRoot);
 	const base = path.join(appDir, 'app', 'out', 'vs', 'code');
 	const electronBase = isVSCodeBelowVersion("1.70.0") ? "electron-browser" : "electron-sandbox";
-	const workBenchFilename = isVSCodeBelowVersion("1.94.0") ? "workbench.html" : "workbench.esm.html";
+	const workBenchFilename = isVSCodeBelowVersion("1.94.0") ? "workbench.esm.html" : "workbench.html";
 
 	const htmlFile = path.join(base, electronBase, "workbench", workBenchFilename);
 
@@ -103,11 +100,11 @@ function uninstall() {
 	const html = fs.readFileSync(htmlFile, "utf-8");
 
 	// check if the tag is already there
-	const isEnabled = html.includes("neondreams.js");
+	const isEnabled = html.includes("neondreamsDarkBlue.js");
 
 	if (isEnabled) {
 		// delete synthwave script tag if there
-		let output = html.replace(/^.*(<!-- SYNTHWAVE 84 --><script src="neondreams.js"><\/script><!-- NEON DREAMS -->).*\n?/mg, '');
+		let output = html.replace(/^.*(<!-- SYNTHWAVE 84 Dark Blue --><script src="neondreamsDarkBlue.js"><\/script><!-- NEON DREAMS Dark Blue -->).*\n?/mg, '');
 		fs.writeFileSync(htmlFile, output, "utf-8");
 
 		vscode.window
